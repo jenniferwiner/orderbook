@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "engines": {
-  "node": "v7.9.0"
+    "node": "v7.9.0"
   },
   "scripts": {
-    "start": "node server/bin/www",
+    "start": "nodemon server/bin/www",
     "knex": "knex",
     "heroku-postbuild": "cd client/ && npm install --only=dev && npm install && npm run build && cd ../server && knex migrate:rollback && knex migrate:latest && knex seed:run;",
     "nodemon": "node server/app.js"
@@ -16,6 +16,6 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
     "express": "~4.14.1",
-    "morgan": "~1.7.0",
+    "morgan": "~1.7.0"
   }
 }
