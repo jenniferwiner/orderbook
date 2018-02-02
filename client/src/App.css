@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+}
+
+.App-title {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.Order-tables {
+  display: inline-block;
+  padding: 20px;
+}
+
+.Order-tables div h3 {
+  text-align: center;
+  width: 100%;
+}
+table {
+  border-collapse: collapse;
+}
+
+table, tr, td, th {
+  border: 1px solid #555;
+}
+
+td {
+  width: 100px;
+}
