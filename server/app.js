@@ -6,7 +6,7 @@ const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 
-let index = require('./routes/index')
+let exchange = require('./routes/exchange')
 
 const app = express()
 
@@ -17,7 +17,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../client/build')))
 app.use(express.static(path.join(__dirname, '/../', 'node_modules')))
 
-app.use('/api', index)
+app.use('/api/exchange', exchange)
 
 app.use('*', function(req, res) {
   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
