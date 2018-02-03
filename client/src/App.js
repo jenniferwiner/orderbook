@@ -1,34 +1,50 @@
 import React, { Component } from 'react';
-import { DropdownButton, MenuItem } from 'react-bootstrap'
+import { DropdownButton, MenuItem, Button } from 'react-bootstrap'
 import './App.css';
 import OrderRows from './OrderRows.js'
+import Matches from './Matches.js'
 
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      market: 'BTC_ETH',
       asks: '',
-      bids: ''
+      bids: '',
+      matches: '',
+      error: '',
     }
+    this.handleExchangeRefresh = this.handleExchangeRefresh.bind(this)
   }
 
   componentWillMount() {
-    console.log('mounting')
-    fetch('/api', {
-      method: 'GET'
+    this.callExchanges()
+  }
+
+  handleExchangeRefresh() {
+    this.callExchanges()
+  }
+
+  callExchanges() {
+    fetch(`/api/exchange/${this.state.market}`, {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache'
+      }
     })
     .then(res => {
       return res.json().then(res => {
         console.log(res)
         this.setState({
           bids: res.bids,
-          asks: res.asks
+          asks: res.asks,
+          matches: res.matches
         })
       })
     })
     .catch(err => {
-      console.err(err)
+      console.error(err)
     })
   }
 
@@ -49,43 +65,49 @@ class App extends Component {
             <MenuItem eventKey="BTC_ETH">Another Market</MenuItem>
           </DropdownButton>
         </div>
+        <Button onClick={this.handleExchangeRefresh}>Refresh Exchanges</Button>
+        { !this.state.error &&
         <div>
-          <h3>Matches</h3>
-        </div>
-        <div className="Order-tables">
-          <div>
-            <h3>Bids</h3>
+          <Matches matches={this.state.matches}/>
+          <div className="Order-tables">
+            <div>
+              <h3>Bids</h3>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Bid (BTC)</th>
+                  <th>Combined Volume of Bids (ETH)</th>
+                  <th>Volume Bittrex (ETH)</th>
+                  <th>Volume Poloniex (ETH)</th>
+                </tr>
+              </thead>
+              <OrderRows orders={this.state.bids}/>
+            </table>
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Price (BTC)</th>
-                <th>Combined Volume (ETH)</th>
-                <th>Bittrex Volume (ETH)</th>
-                <th>Poloniex Volume (ETH)</th>
-              </tr>
-            </thead>
-            <OrderRows orders={this.state.bids}/>
-          </table>
-        </div>
-        <div className="Order-tables">
-          <div>
-            <h3>Asks</h3>
+          <div className="Order-tables">
+            <div>
+              <h3>Asks</h3>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Ask (BTC)</th>
+                  <th>Combined Size of Asks (ETH)</th>
+                  <th>Volume Bittrex (ETH)</th>
+                  <th>Volume Poloniex (ETH)</th>
+                </tr>
+              </thead>
+              <OrderRows orders={this.state.asks}/>
+            </table>
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Price (BTC)</th>
-                <th>Combined Volume (ETH)</th>
-                <th>Bittrex Volume (ETH)</th>
-                <th>Poloniex Volume (ETH)</th>
-              </tr>
-            </thead>
-            <OrderRows orders={this.state.asks}/>
-          </table>
         </div>
+        }
+        { this.state.error &&
+          <h3>Cannot display order book at this time</h3>
+        }
       </div>
-    );
+    )
   }
 }
 
