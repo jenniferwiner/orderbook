@@ -6,9 +6,9 @@
     "node": "v7.9.0"
   },
   "scripts": {
-    "start": "nodemon server/bin/www",
-    "knex": "knex",
-    "heroku-postbuild": "cd client/ && npm install --only=dev && npm install && npm run build && cd ../server && knex migrate:rollback && knex migrate:latest && knex seed:run;",
+    "start": "node server/bin/www",
+    "test": "mocha server/test",
+    "heroku-postbuild": "cd client/ && npm install --only=dev && npm install && npm run build",
     "nodemon": "node server/app.js"
   },
   "dependencies": {
@@ -19,5 +19,11 @@
     "express": "~4.14.1",
     "morgan": "~1.7.0",
     "node-bittrex-api": "^0.8.2"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.0",
+    "nook": "0.0.2",
+    "supertest": "^3.0.0"
   }
 }
