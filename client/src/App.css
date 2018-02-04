@@ -40,13 +40,18 @@
   padding-left: 20px;
 }
 
-.Order-tables {
-  display: inline-block;
-  vertical-align: top;
-  padding: 20px;
+.Tables {
+  text-align: center;
 }
 
-.Order-tables div h3 {
+.Order-table {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 20px 20px 20px;
+  text-align: left;
+}
+
+.Order-table div h3 {
   display: inline-block;
   font-weight: lighter;
   font-size: 4rem;
@@ -78,4 +83,25 @@ th {
 
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
   background-color: rgb(79, 117, 161);
+}
+
+
+/*  Media Queries */
+@media all and (max-width: 767px) {
+  td, th {
+    font-size: 1.25rem;
+    width: 100px;
+  }
+}
+
+@media all and (max-width: 600px) {
+  td, th {
+    font-size: 1rem;
+  }
+}
+
+@media all and (max-width: 500px) {
+  td, th {
+    width: 75px;
+  }
 }

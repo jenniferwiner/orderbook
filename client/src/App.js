@@ -28,7 +28,7 @@ class App extends Component {
   }
 
   handleExchangeRefresh() {
-    this.callExchanges()
+    this.setState({ pageAsk: 1, pageBid: 1}, function() { this.callExchanges() })
   }
 
   handleMarketSelect(evt) {
@@ -36,11 +36,11 @@ class App extends Component {
   }
 
   handleAskPagination(e) {
-    this.setState({ pageAsk: e.target.innerText })
+    this.setState({ pageAsk: Number.parseInt(e.target.innerText, 10) })
   }
 
   handleBidPagination(e) {
-    this.setState({ pageBid: e.target.innerText })
+    this.setState({ pageBid: Number.parseInt(e.target.innerText, 10) })
   }
 
   callExchanges() {
@@ -73,10 +73,10 @@ class App extends Component {
     let itemsBid = []
     for (let number = 1; number <= 5; number++) {
       itemsAsk.push(
-        <Pagination.Item active={number === this.state.pageAsk} onClick={this.handleAskPagination}>{number}</Pagination.Item>
+        <Pagination.Item key={number} active={number === this.state.pageAsk} onClick={this.handleAskPagination}>{number}</Pagination.Item>
       )
       itemsBid.push(
-        <Pagination.Item active={number === this.state.pageBid} onClick={this.handleBidPagination}>{number}</Pagination.Item>
+        <Pagination.Item key={number} active={number === this.state.pageBid} onClick={this.handleBidPagination}>{number}</Pagination.Item>
       )
     }
 
@@ -97,7 +97,6 @@ class App extends Component {
               <MenuItem eventKey="BTC-ETH">BTC-ETH</MenuItem>
               <MenuItem eventKey="BTC-LTC">BTC-LTC</MenuItem>
               <MenuItem eventKey="BTC-DASH">BTC-DASH</MenuItem>
-              <MenuItem eventKey="BTC-DOGE">BTC-DOGE</MenuItem>
             </DropdownButton>
           </div>
           <Button className="Refresh-exchanges-btn" bsSize="large" onClick={this.handleExchangeRefresh}>Refresh Exchanges</Button>
@@ -105,39 +104,41 @@ class App extends Component {
         { !this.state.error &&
         <div>
           <Matches matches={this.state.matches}/>
-          <div className="Order-tables">
-            <div>
-              <h3>Bids</h3>
+          <div className="Tables">
+            <div className="Order-table">
+              <div>
+                <h3>Bids</h3>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Bid<br/>({currency1})</th>
+                    <th>Volume Combined<br/>({currency2})</th>
+                    <th>Volume on Bittrex<br/>({currency2})</th>
+                    <th>Volume on Poloniex<br/>({currency2})</th>
+                  </tr>
+                </thead>
+                <OrderRows orders={this.state.bids} pagination={this.state.pageBid}/>
+              </table>
+              <Pagination bsSize="medium">{itemsBid}</Pagination>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Bid<br/>({currency1})</th>
-                  <th>Volume Combined<br/>({currency2})</th>
-                  <th>Volume on Bittrex<br/>({currency2})</th>
-                  <th>Volume on Poloniex<br/>({currency2})</th>
-                </tr>
-              </thead>
-              <OrderRows orders={this.state.bids} pagination={this.state.pageBid}/>
-            </table>
-            <Pagination bsSize="medium">{itemsBid}</Pagination>
-          </div>
-          <div className="Order-tables">
-            <div>
-              <h3>Asks</h3>
+            <div className="Order-table">
+              <div>
+                <h3>Asks</h3>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ask<br/>({currency1})</th>
+                    <th>Volume Combined<br/>({currency2})</th>
+                    <th>Volume on Bittrex<br/>({currency2})</th>
+                    <th>Volume on Poloniex<br/>({currency2})</th>
+                  </tr>
+                </thead>
+                <OrderRows orders={this.state.asks} pagination={this.state.pageAsk}/>
+              </table>
+              <Pagination bsSize="medium">{itemsAsk}</Pagination>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Ask<br/>({currency1})</th>
-                  <th>Volume Combined<br/>({currency2})</th>
-                  <th>Volume on Bittrex<br/>({currency2})</th>
-                  <th>Volume on Poloniex<br/>({currency2})</th>
-                </tr>
-              </thead>
-              <OrderRows orders={this.state.asks} pagination={this.state.pageAsk}/>
-            </table>
-            <Pagination bsSize="medium">{itemsAsk}</Pagination>
           </div>
         </div>
         }
