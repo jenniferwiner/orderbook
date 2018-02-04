@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Order Book",
+  "name": "Order Book - Where Bittrex and Poloniex Collide",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,6 +10,6 @@
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "rgb(79, 117, 161)",
   "background_color": "#ffffff"
 }
