@@ -13,7 +13,7 @@ class Matches extends Component {
     console.log(props)
       let matches = props.matches.map((match, index) => {
         return (
-          <div key={index}>
+          <div className="Match-content" key={index}>
             <h4>Matched Rate: {match.rate}</h4>
             { match['bittrexMatch'] &&
               <h5>A bid on Bittrex of quantity {match['bittrexMatch']['bid']} matches with an ask on Bittrex with quantity of {match['bittrexMatch']['ask']}</h5>
@@ -25,7 +25,7 @@ class Matches extends Component {
               <h5>A bid on Poloniex of quantity {match['pBidbAskMatch']['bid']} matches with an ask on Bittrex with quantity of {match['pBidbAskMatch']['ask']}</h5>
             }
             { match['bBidpAskMatch'] &&
-              <h5>A bid on Biitrex of quantity {match['bBidpAskMatch']['bid']} matches with an ask on Poloniex with quantity of {match['bBidpAskMatch']['ask']}</h5>
+              <h5>A bid on Bittrex of quantity {match['bBidpAskMatch']['bid']} matches with an ask on Poloniex with quantity of {match['bBidpAskMatch']['ask']}</h5>
             }
           </div>
         )
@@ -36,7 +36,9 @@ class Matches extends Component {
   render() {
     return (
       <div>
-        <h2>Matches</h2>
+        { this.state.matches.length === 0 &&
+        <h4 className="Match-title">No order matches</h4>
+        }
         {this.state.matches}
       </div>
     )
