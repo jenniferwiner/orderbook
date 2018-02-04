@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DropdownButton, MenuItem, Button } from 'react-bootstrap'
+import { DropdownButton, MenuItem, Button, Pagination} from 'react-bootstrap'
 import './App.css';
 import OrderRows from './OrderRows.js'
 import Matches from './Matches.js'
@@ -9,13 +9,18 @@ class App extends Component {
     super(props)
 
     this.state = {
-      market: 'BTC_ETH',
+      market: 'BTC-ETH',
       asks: '',
       bids: '',
       matches: '',
+      pageBid: 1,
+      pageAsk: 1,
       error: '',
     }
     this.handleExchangeRefresh = this.handleExchangeRefresh.bind(this)
+    this.handleMarketSelect = this.handleMarketSelect.bind(this)
+    this.handleAskPagination = this.handleAskPagination.bind(this)
+    this.handleBidPagination = this.handleBidPagination.bind(this)
   }
 
   componentWillMount() {
@@ -24,6 +29,18 @@ class App extends Component {
 
   handleExchangeRefresh() {
     this.callExchanges()
+  }
+
+  handleMarketSelect(evt) {
+    this.setState({ market: evt }, function() { this.callExchanges() })
+  }
+
+  handleAskPagination(e) {
+    this.setState({ pageAsk: e.target.innerText })
+  }
+
+  handleBidPagination(e) {
+    this.setState({ pageBid: e.target.innerText })
   }
 
   callExchanges() {
@@ -35,7 +52,6 @@ class App extends Component {
     })
     .then(res => {
       return res.json().then(res => {
-        console.log(res)
         this.setState({
           bids: res.bids,
           asks: res.asks,
@@ -49,23 +65,43 @@ class App extends Component {
   }
 
   render() {
+    let currency1 = this.state.market.substring(0,3)
+    let currency2 = this.state.market.substring(4)
+
+    // handle pagination
+    let itemsAsk = []
+    let itemsBid = []
+    for (let number = 1; number <= 5; number++) {
+      itemsAsk.push(
+        <Pagination.Item active={number === this.state.pageAsk} onClick={this.handleAskPagination}>{number}</Pagination.Item>
+      )
+      itemsBid.push(
+        <Pagination.Item active={number === this.state.pageBid} onClick={this.handleBidPagination}>{number}</Pagination.Item>
+      )
+    }
+
     return (
       <div>
-        <div className="App-title">
-          <h1 >Order Book</h1>
+        <div className="App">
+          <h1 className="App-title">Order Book</h1>
+          <hr className="hr"/>
+          <div>
+            <h4 className="Market-btn-label">Choose Market</h4>
+            <DropdownButton
+              className="Market-btn"
+              bsSize="large"
+              title={this.state.market}
+              id="dropdown-size-large"
+              onSelect={this.handleMarketSelect}
+            >
+              <MenuItem eventKey="BTC-ETH">BTC-ETH</MenuItem>
+              <MenuItem eventKey="BTC-LTC">BTC-LTC</MenuItem>
+              <MenuItem eventKey="BTC-DASH">BTC-DASH</MenuItem>
+              <MenuItem eventKey="BTC-DOGE">BTC-DOGE</MenuItem>
+            </DropdownButton>
+          </div>
+          <Button className="Refresh-exchanges-btn" bsSize="large" onClick={this.handleExchangeRefresh}>Refresh Exchanges</Button>
         </div>
-        <div>
-          <h4>Choose Market</h4>
-          <DropdownButton
-            bsSize="large"
-            title="Market"
-            id="dropdown-size-large"
-          >
-            <MenuItem eventKey="BTC_ETH" active>BTC_ETH</MenuItem>
-            <MenuItem eventKey="BTC_ETH">Another Market</MenuItem>
-          </DropdownButton>
-        </div>
-        <Button onClick={this.handleExchangeRefresh}>Refresh Exchanges</Button>
         { !this.state.error &&
         <div>
           <Matches matches={this.state.matches}/>
@@ -76,14 +112,15 @@ class App extends Component {
             <table>
               <thead>
                 <tr>
-                  <th>Bid (BTC)</th>
-                  <th>Combined Volume of Bids (ETH)</th>
-                  <th>Volume Bittrex (ETH)</th>
-                  <th>Volume Poloniex (ETH)</th>
+                  <th>Bid<br/>({currency1})</th>
+                  <th>Volume Combined<br/>({currency2})</th>
+                  <th>Volume on Bittrex<br/>({currency2})</th>
+                  <th>Volume on Poloniex<br/>({currency2})</th>
                 </tr>
               </thead>
-              <OrderRows orders={this.state.bids}/>
+              <OrderRows orders={this.state.bids} pagination={this.state.pageBid}/>
             </table>
+            <Pagination bsSize="medium">{itemsBid}</Pagination>
           </div>
           <div className="Order-tables">
             <div>
@@ -92,14 +129,15 @@ class App extends Component {
             <table>
               <thead>
                 <tr>
-                  <th>Ask (BTC)</th>
-                  <th>Combined Size of Asks (ETH)</th>
-                  <th>Volume Bittrex (ETH)</th>
-                  <th>Volume Poloniex (ETH)</th>
+                  <th>Ask<br/>({currency1})</th>
+                  <th>Volume Combined<br/>({currency2})</th>
+                  <th>Volume on Bittrex<br/>({currency2})</th>
+                  <th>Volume on Poloniex<br/>({currency2})</th>
                 </tr>
               </thead>
-              <OrderRows orders={this.state.asks}/>
+              <OrderRows orders={this.state.asks} pagination={this.state.pageAsk}/>
             </table>
+            <Pagination bsSize="medium">{itemsAsk}</Pagination>
           </div>
         </div>
         }
