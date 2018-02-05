@@ -8,12 +8,12 @@ class OrderRows extends Component {
       orders: [],
     }
 
-    this.toFixed8 = this.toFixed8.bind(this)
+    this.toFixedDecimals = this.toFixedDecimals.bind(this)
   }
 
-  toFixed8(value) {
+  toFixedDecimals(value, digit) {
     // make values display pretty
-    return value === 0 ? '0' : value.toFixed(8)
+    return value === 0 ? '0' : value.toFixed(digit)
   }
 
   componentWillReceiveProps(props) {
@@ -21,10 +21,10 @@ class OrderRows extends Component {
       if (index >= ((props.pagination - 1) * 20) && index < props.pagination * 20) {
         return (
           <tr key={index}>
-            <td>{order.rate}</td>
-            <td>{this.toFixed8(order.combined)}</td>
-            <td>{this.toFixed8(order.perExchange[0])}</td>
-            <td>{this.toFixed8(order.perExchange[1])}</td>
+            <td>{this.toFixedDecimals(order.rate, 6)}</td>
+            <td>{this.toFixedDecimals(order.combined, 8)}</td>
+            <td>{this.toFixedDecimals(order.perExchange[0], 8)}</td>
+            <td>{this.toFixedDecimals(order.perExchange[1], 8)}</td>
           </tr>
         )
       }

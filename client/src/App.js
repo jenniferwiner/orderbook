@@ -112,6 +112,7 @@ class App extends Component {
             </DropdownButton>
           </div>
           <Button className="Refresh-exchanges-btn" bsSize="large" onClick={this.handleExchangeRefresh}>Refresh Exchanges</Button>
+          <p><em>Exchanges auto-refresh every 1 second</em></p>
         </div>
         { !this.state.error &&
         <div>
