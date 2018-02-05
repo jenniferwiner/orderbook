@@ -16,34 +16,45 @@ class App extends Component {
       matches: '',
       pageBid: 1,
       pageAsk: 1,
-      error: '',
+      error: ''
     }
     this.handleExchangeRefresh = this.handleExchangeRefresh.bind(this)
     this.handleMarketSelect = this.handleMarketSelect.bind(this)
     this.handleAskPagination = this.handleAskPagination.bind(this)
     this.handleBidPagination = this.handleBidPagination.bind(this)
+    this.timer = this.timer.bind(this)
   }
 
   componentWillMount() {
     this.callExchanges()
   }
 
+  // auto refresh every second
+  timer() {
+    this.callExchanges()
+  }
+  componentDidMount() {
+    this.interval = setInterval(this.timer, 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  //  button, dropdown, pagination
   handleExchangeRefresh() {
     this.setState({ pageAsk: 1, pageBid: 1}, function() { this.callExchanges() })
   }
-
   handleMarketSelect(evt) {
     this.setState({ market: evt }, function() { this.callExchanges() })
   }
-
   handleAskPagination(e) {
     this.setState({ pageAsk: Number.parseInt(e.target.innerText, 10) })
   }
-
   handleBidPagination(e) {
     this.setState({ pageBid: Number.parseInt(e.target.innerText, 10) })
   }
 
+  // call API
   callExchanges() {
     fetch(`/api/exchange/${this.state.market}`, {
       method: 'GET',
