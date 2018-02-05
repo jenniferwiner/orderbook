@@ -39,6 +39,7 @@
 
 .Match-content {
   padding-left: 20px;
+  padding-right: 20px;
 }
 
 .Tables {
@@ -129,14 +130,15 @@ th {
   .App-title {
     font-size: 4rem;
   }
+  .hr {
+    width: 100px;
+    margin-bottom: 15px;
+  }
   .Match-title {
     padding-top: 10px;
   }
   .Match-content h5 {
     font-size: 12px;
-  }
-  .hr {
-    width: 100px;
   }
   h4 {
     font-size: 16px;
