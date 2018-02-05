@@ -91,6 +91,7 @@ th {
   background-color: rgb(79, 117, 161);
   color: #fff;
 }
+
 .footer p {
   padding-bottom: 10px;
   margin: 0;
@@ -103,6 +104,12 @@ th {
 .Website-icon {
   height: 30px;
   margin: 5px;
+}
+
+.error {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  text-align: center;
 }
 
 /*  Media Queries */

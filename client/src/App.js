@@ -95,7 +95,7 @@ class App extends Component {
     return (
       <div>
         <div className="App">
-          <h1 className="App-title">Order Book</h1>
+          <h1 className="App-title">OrderBook</h1>
           <hr className="hr"/>
           <div>
             <h4 className="Market-btn-label">Choose Market</h4>
@@ -156,7 +156,7 @@ class App extends Component {
         </div>
         }
         { this.state.error &&
-          <h3>Cannot display order book at this time</h3>
+          <h3 className="error">Cannot display order book at this time</h3>
         }
         <Footer />
       </div>

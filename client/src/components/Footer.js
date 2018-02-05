@@ -12,7 +12,7 @@ class Footer extends Component {
             <a className="footer-link" href="https://github.com/jenniferwiner/orderbook" target="blank"><img src={Github} className="Github-icon" alt="Github Repo"/></a>
             <a className="footer-link" href="http://jenniferwiner.com" target="blank"><img src={WebsiteIcon} className="Website-icon" alt="Jennifer Winer Website Icon"/></a>
             <br/>
-            <p className="copyright">OrderBook-Collide 2018, Jennifer Winer</p>
+            <p className="copyright">OrderBook 2018, Jennifer Winer</p>
           </div>
         </div>
       </div>

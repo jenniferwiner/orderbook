@@ -28,15 +28,12 @@ class Matches extends Component {
             }
             { match['poloniexMatch'] &&
               <h5>{ this.matchStatement(match['poloniexMatch'], 'Poloniex', 'Poloniex') }</h5>
-
             }
             { match['pBidbAskMatch'] &&
               <h5>{ this.matchStatement(match['pBidbAskMatch'], 'Poloniex', 'Bittrex') }</h5>
-
             }
             { match['bBidpAskMatch'] &&
               <h5>{ this.matchStatement(match['bBidpAskMatch'], 'Bittrex', 'Poloniex') }</h5>
-
             }
           </div>
         )

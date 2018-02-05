@@ -7,7 +7,6 @@ class OrderRows extends Component {
     this.state = {
       orders: [],
     }
-
     this.toFixedDecimals = this.toFixedDecimals.bind(this)
   }
 
@@ -29,7 +28,7 @@ class OrderRows extends Component {
         )
       }
     })
-    this.setState({orders: orders })
+    this.setState({ orders })
   }
 
   render() {
