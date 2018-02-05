@@ -24,6 +24,9 @@ $ npm start
 - Bittrex API (public)
 - Poloniex API (public)
 
-
+### Future expansion:
+- Auto refresh exchange data from server every .5 - 1 second
+- Prevent more than 6 refreshed/sec (to obey APIs)
+- Loader prior to initial render
 
 Jennifer Winer, 2018
