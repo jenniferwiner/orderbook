@@ -1,4 +1,4 @@
-# Welcome to Orderbook
+# Welcome to OrderBook
 #### Explore Where Bittrex and Poloniex Collide
 
 ```
@@ -14,7 +14,7 @@ $ npm start
 - Find matches between a bid and an ask
   - on Bittrex
   - on Poloniex
-  - or, a bid on one Bittrex and an ask on Poloniex (visa versa)
+  - or, a bid on Bittrex and an ask on Poloniex (visa versa)
 
 
 ### Technologies Used:
