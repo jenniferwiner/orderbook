@@ -27,6 +27,7 @@
 
 .Refresh-exchanges-btn {
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .Match-title {
@@ -131,6 +132,9 @@ th {
   .Match-title {
     padding-top: 10px;
   }
+  .Match-content h5 {
+    font-size: 12px;
+  }
   .hr {
     width: 100px;
   }
@@ -139,6 +143,9 @@ th {
   }
   .btn.btn-lg {
     font-size: 14px;
+  }
+  .Order-table div h3 {
+    font-size: 3rem;
   }
   td, th {
     /* width: 75px; */
