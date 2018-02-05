@@ -5,6 +5,7 @@ const generateMatches = require('./generateMatches')
 let bids = {}
 let asks = {}
 
+// public method
 function callExchanges(req, res, next) {
   let market = req.params.market
 
@@ -49,22 +50,22 @@ function callExchanges(req, res, next) {
   })
 }
 
-// UTILITY METHODS
+// UTILITY PRIVATE METHODS
 
 function getBittrexOrderBook(market) {
   return new Promise(function(resolve, reject) {
     bittrex.getorderbook({ market: market, type: 'both' }, function(data, err) {
-      if (err) {
+      if (err || data.success !== true) {
         reject('Error in calling Bittrex API: ' + err)
       }
       let bittrexBid = data.result.buy
       let bittrexAsk = data.result.sell
       // limit data to 50 orders
       for (let i = 0; i < 50 && i < bittrexBid.length; i++) {
-        addBidPrice(toFixed6Down(bittrexBid[i].Rate), bittrexBid[i].Quantity, 'Bittrex')
+        addBidPrice(toFixedDown(bittrexBid[i].Rate, 6), bittrexBid[i].Quantity, 'Bittrex')
       }
       for (let i = 0; i < 50 && i < bittrexAsk.length; i++) {
-        addAskPrice(toFixed6Down(bittrexAsk[i].Rate), bittrexAsk[i].Quantity, 'Bittrex')
+        addAskPrice(toFixedDown(bittrexAsk[i].Rate, 6), bittrexAsk[i].Quantity, 'Bittrex')
       }
       resolve(bids)
     })
@@ -86,10 +87,10 @@ function getPoloniexOrderBook(market) {
     })
     .then(function(response) {
       response.data.bids.forEach(bid => {
-        addBidPrice(toFixed6Down(bid[0]), bid[1], 'Poloniex')
+        addBidPrice(toFixedDown(bid[0], 6), bid[1], 'Poloniex')
       })
       response.data.asks.forEach(ask => {
-        addAskPrice(toFixed6Down(ask[0]), ask[1], 'Poloniex')
+        addAskPrice(toFixedDown(ask[0], 6), ask[1], 'Poloniex')
       })
       resolve(bids)
     })
@@ -131,12 +132,12 @@ function addAskPrice(rate, quantity, exchange) {
   }
 }
 
-// trucate rate to 6 digits
-function toFixed6Down(rate) {
-  let regex = new RegExp('(\\d+\\.\\d{6})(\\d)')
+// trucate rate to X digits
+function toFixedDown(rate, digit) {
+  let regex = new RegExp(`(\\d+\\.\\d{${digit}})(\\d)`)
   let m = rate.toString().match(regex)
 
-  return m ? parseFloat(m[1]) : rate.valueOf()
+  return m ? parseFloat(m[1]) : rate
 }
 
 module.exports = callExchanges
