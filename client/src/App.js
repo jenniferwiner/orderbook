@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { DropdownButton, MenuItem, Button, Pagination} from 'react-bootstrap'
 import './App.css';
-import OrderRows from './OrderRows.js'
-import Matches from './Matches.js'
+import OrderRows from './components/OrderRows.js'
+import Matches from './components/Matches.js'
+import Footer from './components/Footer.js'
 
 class App extends Component {
   constructor(props) {
@@ -145,6 +146,7 @@ class App extends Component {
         { this.state.error &&
           <h3>Cannot display order book at this time</h3>
         }
+        <Footer />
       </div>
     )
   }
