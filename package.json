@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "OrderBook",
   "version": "0.0.0",
   "private": true,
   "engines": {
@@ -19,11 +19,5 @@
     "express": "~4.14.1",
     "morgan": "~1.7.0",
     "node-bittrex-api": "^0.8.2"
-  },
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^5.0.0",
-    "nook": "0.0.2",
-    "supertest": "^3.0.0"
   }
 }
