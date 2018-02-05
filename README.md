@@ -14,8 +14,7 @@ $ npm start
 - Find matches between a bid and an ask
   - on Bittrex
   - on Poloniex
-  - or, a bid on Bittrex and an ask on Poloniex (visa versa)
-
+  - or a bid on Bittrex and an ask on Poloniex (& visa versa)
 
 ### Technologies Used:
 - React
